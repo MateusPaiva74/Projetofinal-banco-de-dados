@@ -1,0 +1,57 @@
+
+CREATE TABLE Cliente (
+    CPF CHAR(11) PRIMARY KEY,
+    NomeCompleto VARCHAR(255),
+    DataNascimento DATE,
+    CEP CHAR(8),
+    Endereco VARCHAR(255)
+);
+
+
+CREATE TABLE Produto (
+    ProdutoID INT PRIMARY KEY,
+    TipoProduto VARCHAR(50),
+    Tamanho VARCHAR(10),
+    Cor VARCHAR(50),
+    Marca VARCHAR(100),
+    Modelo VARCHAR(100)
+);
+
+
+CREATE TABLE Venda (
+    VendaID INT PRIMARY KEY,
+    CPFCliente CHAR(11),
+    ProdutoID INT,
+    Quantidade INT,
+    DataVenda DATE,
+    FOREIGN KEY (CPFCliente) REFERENCES Cliente(CPF),
+    FOREIGN KEY (ProdutoID) REFERENCES Produto(ProdutoID)
+);
+
+
+CREATE TABLE MetodoPagamento (
+    MetodoPagamentoID INT PRIMARY KEY,
+    NomeMetodo VARCHAR(50)
+);
+
+
+INSERT INTO MetodoPagamento (MetodoPagamentoID, NomeMetodo)
+VALUES
+    (1, 'Cartão de Crédito'),
+    (2, 'Cartão de Débito'),
+    (3, 'boleto');
+    (4, 'pix');
+   
+
+
+CREATE TABLE Venda (
+    VendaID INT PRIMARY KEY,
+    CPFCliente CHAR(11),
+    ProdutoID INT,
+    Quantidade INT,
+    DataVenda DATE,
+    MetodoPagamentoID INT,
+    FOREIGN KEY (CPFCliente) REFERENCES Cliente(CPF),
+    FOREIGN KEY (ProdutoID) REFERENCES Produto(ProdutoID),
+    FOREIGN KEY (MetodoPagamentoID) REFERENCES MetodoPagamento(MetodoPagamentoID)
+);
