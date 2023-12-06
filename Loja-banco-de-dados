@@ -1,4 +1,3 @@
-
 CREATE TABLE Cliente (
     CPF CHAR(11) PRIMARY KEY,
     NomeCompleto VARCHAR(255),
@@ -10,7 +9,7 @@ CREATE TABLE Cliente (
 
 CREATE TABLE Produto (
     ProdutoID INT PRIMARY KEY,
-    TipoProduto VARCHAR(50),
+    TipoProduto VARCHAR(50), 
     Tamanho VARCHAR(10),
     Cor VARCHAR(50),
     Marca VARCHAR(100),
@@ -24,8 +23,10 @@ CREATE TABLE Venda (
     ProdutoID INT,
     Quantidade INT,
     DataVenda DATE,
+    MetodoPagamentoID INT,
     FOREIGN KEY (CPFCliente) REFERENCES Cliente(CPF),
-    FOREIGN KEY (ProdutoID) REFERENCES Produto(ProdutoID)
+    FOREIGN KEY (ProdutoID) REFERENCES Produto(ProdutoID),
+    FOREIGN KEY (MetodoPagamentoID) REFERENCES MetodoPagamento(MetodoPagamentoID)
 );
 
 
@@ -36,22 +37,26 @@ CREATE TABLE MetodoPagamento (
 
 
 INSERT INTO MetodoPagamento (MetodoPagamentoID, NomeMetodo)
-VALUES
+VALUES 
     (1, 'Cartão de Crédito'),
     (2, 'Cartão de Débito'),
     (3, 'boleto');
     (4, 'pix');
-   
+-- Inserir dados fictícios na tabela Cliente
+INSERT INTO Cliente (CPF, NomeCompleto, DataNascimento, CEP, Endereco)
+VALUES 
+    ('12345678901', 'João Silva', '1990-05-15', '12345678', 'Rua A, 123'),
+    ('98765432109', 'Maria Oliveira', '1985-09-20', '98765432', 'Avenida B, 456');
 
+-- Inserir dados fictícios na tabela Produto
+INSERT INTO Produto (ProdutoID, TipoProduto, Tamanho, Cor, Marca, Modelo)
+VALUES 
+    (1, 'Calçado Esportivo', '42', 'Preto', 'Nike', 'Air Max'),
+    (2, 'Sapato Social', '39', 'Marrom', 'Zara', 'Elegance');
 
-CREATE TABLE Venda (
-    VendaID INT PRIMARY KEY,
-    CPFCliente CHAR(11),
-    ProdutoID INT,
-    Quantidade INT,
-    DataVenda DATE,
-    MetodoPagamentoID INT,
-    FOREIGN KEY (CPFCliente) REFERENCES Cliente(CPF),
-    FOREIGN KEY (ProdutoID) REFERENCES Produto(ProdutoID),
-    FOREIGN KEY (MetodoPagamentoID) REFERENCES MetodoPagamento(MetodoPagamentoID)
-);
+-- Inserir dados fictícios na tabela Venda
+INSERT INTO Venda (VendaID, CPFCliente, ProdutoID, Quantidade, DataVenda, MetodoPagamentoID)
+VALUES 
+    (1, '12345678901', 1, 2, '2023-07-01', 1),
+    (2, '98765432109', 2, 1, '2023-07-02', 2);
+
